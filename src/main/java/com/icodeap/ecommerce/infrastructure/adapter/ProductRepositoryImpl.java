@@ -1,76 +1,49 @@
 package com.icodeap.ecommerce.infrastructure.adapter;
 
-import com.icodeap.ecommerce.infrastructure.entity.ProductEntity;
+import com.icodeap.ecommerce.application.repository.ProductRepository;
+import com.icodeap.ecommerce.domain.Product;
+import com.icodeap.ecommerce.domain.User;
+import com.icodeap.ecommerce.infrastructure.mapper.ProductMapper;
+import com.icodeap.ecommerce.infrastructure.mapper.UserMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public class ProductRepositoryImpl implements ProductCrudRepository {
+public class ProductRepositoryImpl implements ProductRepository {
 
     private final ProductCrudRepository productCrudRepository;
 
-    public ProductRepositoryImpl(ProductCrudRepository productCrudRepository) {
+    private final ProductMapper productMapper;
+
+    private final UserMapper userMapper;
+
+    public ProductRepositoryImpl(ProductCrudRepository productCrudRepository, ProductMapper productMapper, UserMapper userMapper) {
         this.productCrudRepository = productCrudRepository;
+        this.productMapper = productMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
-    public <S extends ProductEntity> S save(S entity) {
-        return null;
+    public Iterable<Product> getProducts() {
+        return productMapper.toProducts(productCrudRepository.findAll());
     }
 
     @Override
-    public <S extends ProductEntity> Iterable<S> saveAll(Iterable<S> entities) {
-        return null;
+    public Iterable<Product> getProductsByUser(User user) {
+        return productMapper.toProducts(productCrudRepository.findByUser(userMapper.toUserEntity(user)));
     }
 
     @Override
-    public Optional<ProductEntity> findById(Integer integer) {
-        return Optional.empty();
+    public Product getProductById(Integer id) {
+        return productCrudRepository.findById(id).map(productMapper::toProduct).orElse(null);
     }
 
     @Override
-    public boolean existsById(Integer integer) {
-        return false;
+    public Product saveProduct(Product product) {
+        return productMapper.toProduct(productCrudRepository.save(productMapper.toProductEntity(product)));
     }
 
     @Override
-    public Iterable<ProductEntity> findAll() {
-        return null;
-    }
-
-    @Override
-    public Iterable<ProductEntity> findAllById(Iterable<Integer> integers) {
-        return null;
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public void deleteById(Integer integer) {
-
-    }
-
-    @Override
-    public void delete(ProductEntity entity) {
-
-    }
-
-    @Override
-    public void deleteAllById(Iterable<? extends Integer> integers) {
-
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends ProductEntity> entities) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-
+    public void deleteProductById(Integer id) {
+        productCrudRepository.deleteById(id);
     }
 }
