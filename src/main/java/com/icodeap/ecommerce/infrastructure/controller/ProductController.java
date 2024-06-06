@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,7 +29,7 @@ public class ProductController {
 
     @PostMapping("/save-product")
     public String saveProduct(Product product) {
-        log.info("Producto: {}", product.toString());
+        log.info("[SAVE] Producto: {}", product);
         productService.saveProduct(product);
         return "redirect:/admin";
     }
@@ -40,5 +41,11 @@ public class ProductController {
         var products = productService.getProductsByUser(user);
         model.addAttribute("products", products);
         return "admin/products/show";
+    }
+
+    @GetMapping("/edit/{id}")
+    public void editProduct(@PathVariable Integer id) {
+        var product = productService.getProductById(id);
+        log.info("[EDIT] Producto: {}", product);
     }
 }
