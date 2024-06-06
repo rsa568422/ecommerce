@@ -21,7 +21,7 @@
 
 <body>
 
-<div th:insert="admin/template_admin.html::header"></div>
+<div th:insert="~{admin/template_admin::header}"></div>
 
 <!-- Page Content -->
 <div class="container">
@@ -51,10 +51,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td ></td>
-        <td ></td>
-        <td ></td>
+      <tr th:each="product:${products}">
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.price}"></td>
         <td><a  class="btn btn-warning" href="">Editar</a> </td>
         <td><a  class="btn btn-danger" href="">Eliminar</a> </td>
 		
@@ -66,13 +66,7 @@
 </div>
 <!-- /.container -->
 
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-  <div class="container">
-    <p class="m-0 text-center text-white">Copyright &copy; Spring eCommerce 2020</p>
-  </div>
-  <!-- /.container -->
-</footer>
+<div th:insert="~{admin/template_admin::footer}"></div>
 
 <!-- Bootstrap core JavaScript -->
 <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
