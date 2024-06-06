@@ -30,4 +30,9 @@ public class ProductController {
         productService.saveProduct(product);
         return "redirect:/admin";
     }
+
+    @GetMapping("/show")
+    public String showProduct() {
+        return "admin/products/show";
+    }
 }
