@@ -2,12 +2,14 @@ package com.icodeap.ecommerce.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@ToString
 @AllArgsConstructor
 public class Product {
 
