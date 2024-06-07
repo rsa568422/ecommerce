@@ -50,4 +50,10 @@ public class ProductController {
         model.addAttribute("product", product);
         return "admin/products/edit";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Integer id) {
+        productService.deleteProductById(id);
+        return "redirect:/admin/products/show";
+    }
 }
