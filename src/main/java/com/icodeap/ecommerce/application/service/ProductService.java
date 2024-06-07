@@ -4,6 +4,9 @@ import com.icodeap.ecommerce.application.repository.ProductRepository;
 import com.icodeap.ecommerce.domain.Product;
 import com.icodeap.ecommerce.domain.User;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -25,6 +28,19 @@ public class ProductService {
     }
 
     public Product saveProduct(Product product) {
+        if (Objects.isNull(product.getId())) {
+            var user = new User();
+            user.setId(1);
+            product.setUser(user);
+            product.setDateCreated(LocalDateTime.now());
+            product.setDateUpdated(LocalDateTime.now());
+        } else {
+            var productDB = productRepository.getProductById(product.getId());
+            product.setCode(productDB.getCode());
+            product.setUser(productDB.getUser());
+            product.setDateCreated(productDB.getDateCreated());
+            product.setDateUpdated(LocalDateTime.now());
+        }
         return productRepository.saveProduct(product);
     }
 
