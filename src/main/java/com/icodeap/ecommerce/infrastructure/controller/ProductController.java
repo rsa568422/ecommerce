@@ -44,8 +44,10 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public void editProduct(@PathVariable Integer id) {
+    public String editProduct(@PathVariable Integer id, Model model) {
         var product = productService.getProductById(id);
         log.info("[EDIT] Producto: {}", product);
+        model.addAttribute("product", product);
+        return "admin/products/edit";
     }
 }
