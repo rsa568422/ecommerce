@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Bean
-    public ProductService productService(ProductRepository productRepository) {
-        return new ProductService(productRepository);
+    public ProductService productService(ProductRepository productRepository, UploadFile uploadFile) {
+        return new ProductService(productRepository, uploadFile);
     }
 
     @Bean
