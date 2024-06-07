@@ -28,35 +28,34 @@
 
   <!-- Page Heading/Breadcrumbs -->
   <h1 class="mt-4 mb-3">
-    Spring eCommerce <small>Inventario</small>
+    Spring eCommerce <small>Productos</small>
   </h1>
 
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-    <li class="breadcrumb-item active">Ver Inventario</li>
+    <li class="breadcrumb-item active">Añadir unidades</li>
   </ol>
 
-  <a class="btn btn-primary" th:href="@{/admin/products/stock/create-unit-product/{id} (id = ${idproduct})}" > Añadir unidades</a>
-  <h2>Inventario</h2>
-  <table class="table">
-    <thead>
-		<th scope="col">Fecha Registro</th>
-        <th scope="col">Entrada/Unidades</th>
-        <th scope="col">Salida/Unidades</th>
-        <th scope="col">Descripción</th>
-		<th scope="col">Saldo/Unidades</th>	
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="stock:${stocks}">
-        <td th:text="${stock.dateCreated}"></td>
-        <td th:text="${stock.unitIn}"></td>
-        <td th:text="${stock.unitOut}"></td>
-        <td th:text="${stock.description}"></td>
-        <td th:text="${stock.balance}"></td>
-      </tr>       
-    </tbody>
-  </table>
+  <h2>Añadir</h2>
+  <form class="form-horizontal" action="#" method="post">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="unitIn">Cantidad:</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="unitIn"
+        name="unitIn" placeholder="Ingrese la cantidad del producto"
+        required autocomplete="off">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2">
+        <button type="submit" class="btn btn-success">
+          <span class="glyphicon glyphicon-saved"></span> Guardar
+        </button>
+      </div>
+    </div>
+
+  </form>
 
 </div>
 <!-- /.container -->
