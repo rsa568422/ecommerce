@@ -32,12 +32,12 @@
       </h1>
 
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/admin}">Home</a></li>
         <li class="breadcrumb-item active">Actualizar Producto</li>
       </ol>
 
       <h2>Actualizar Producto</h2>
-      <form class="form-horizontal" action="#" method="post"  enctype="multipart/form-data">
+      <form class="form-horizontal" th:action="@{/admin/products/save-product}" method="post"  enctype="multipart/form-data">
         <input type="hidden" name="id" th:value="${product.id}">
         <div class="form-group">
           <label class="control-label col-sm-2" for="name">Nombre:</label>
