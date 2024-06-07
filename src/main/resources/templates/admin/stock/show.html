@@ -10,7 +10,6 @@
 
   <title>Spring eCommerce</title>
 
-
   <!-- Bootstrap core CSS -->
   <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
@@ -29,36 +28,32 @@
 
   <!-- Page Heading/Breadcrumbs -->
   <h1 class="mt-4 mb-3">
-    Spring eCommerce <small>Productos</small>
+    Spring eCommerce <small>Inventario</small>
   </h1>
 
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a th:href="@{/admin}">Home</a></li>
-    <li class="breadcrumb-item active">Ver Productos</li>
+    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+    <li class="breadcrumb-item active">Ver Inventario</li>
   </ol>
 
-  <a class="btn btn-primary" th:href="@{/admin/products/create}" > Crear Producto</a>
-  <h2>Productos</h2>
+  <a class="btn btn-primary" href="#" > Añadir unidades</a>
+  <h2>Inventario</h2>
   <table class="table">
     <thead>
-      <tr>
-        <th scope="col">Nombre</th>
+		<th scope="col">Fecha Registro</th>
+        <th scope="col">Entrada/Unidades</th>
+        <th scope="col">Salida/Unidades</th>
         <th scope="col">Descripción</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Editar</th>
-        <th scope="col">Eliminar</th>
-		<th scope="col">Inventario</th>
+		<th scope="col">Saldo/Unidades</th>	
       </tr>
     </thead>
     <tbody>
-      <tr th:each="product:${products}">
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.description}"></td>
-        <td th:text="${product.price}"></td>
-        <td><a  class="btn btn-warning" th:href="@{/admin/products/edit/{id} (id = ${product.id})}">Editar</a> </td>
-        <td><a  class="btn btn-danger" th:href="@{/admin/products/delete/{id} (id = ${product.id})}">Eliminar</a> </td>
-		
-        <td><a  class="btn btn-danger" th:href="@{/admin/products/stock/{id} (id = ${product.id})}">Inventario</a> </td>
+      <tr>
+        <td ></td>
+        <td ></td>
+        <td ></td>
+        <td ></td>
+		<td ></td>
       </tr>       
     </tbody>
   </table>
