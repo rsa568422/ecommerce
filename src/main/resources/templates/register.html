@@ -54,11 +54,17 @@
         </div>
       </div>
     </div>
-	<form action="#" method="post">
+	<form th:action="@{/register}" method="post">
       <div class="form-group">
-        <label for="nombre">Nombres:</label> <input type="text"
-          class="form-control" id="nombre" name="nombre"
-          placeholder="Ingrese sus nombres" autocomplete="off">
+        <label for="firstName">Nombres:</label> <input type="text"
+          class="form-control" id="firstName" name="firstName"
+          placeholder="Ingrese su nombre" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Apellido:</label> <input type="text"
+          class="form-control" id="lastName" name="lastName"
+          placeholder="Ingrese su apellido" autocomplete="off">
       </div>
 
       <div class="form-group">
@@ -68,13 +74,13 @@
       </div>
 
       <div class="form-group">
-        <label for="direccion">Dirección:</label> <input type="text"
-          class="form-control" id="direccion" name="direccion"
+        <label for="address">Dirección:</label> <input type="text"
+          class="form-control" id="address" name="address"
           placeholder="Ingrese su dirección" autocomplete="off">
       </div>
 	   <div class="form-group">
-        <label for="direccion">Teléfono:</label> <input type="text"
-          class="form-control" id="direccion" name="direccion"
+        <label for="cellphone">Teléfono:</label> <input type="text"
+          class="form-control" id="cellphone" name="cellphone"
           placeholder="Ingrese su teléfono" autocomplete="off">
       </div>
 
