@@ -4,6 +4,7 @@ import com.icodeap.ecommerce.application.repository.OrderProductRepository;
 import com.icodeap.ecommerce.application.repository.OrderRepository;
 import com.icodeap.ecommerce.application.repository.ProductRepository;
 import com.icodeap.ecommerce.application.repository.StockRepository;
+import com.icodeap.ecommerce.application.service.CartService;
 import com.icodeap.ecommerce.application.service.OrderProductService;
 import com.icodeap.ecommerce.application.service.OrderService;
 import com.icodeap.ecommerce.application.service.ProductService;
@@ -12,6 +13,9 @@ import com.icodeap.ecommerce.application.service.UploadFile;
 import com.icodeap.ecommerce.application.service.ValidateStock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
 public class BeanConfiguration {
@@ -44,5 +48,11 @@ public class BeanConfiguration {
     @Bean
     public OrderProductService orderProductService(OrderProductRepository orderProductRepository) {
         return new OrderProductService(orderProductRepository);
+    }
+
+    @Bean
+    @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+    public CartService cartService() {
+        return new CartService();
     }
 }

@@ -1,6 +1,7 @@
 package com.icodeap.ecommerce.application.service;
 
 import com.icodeap.ecommerce.domain.ItemCart;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 public class CartService {
 
+    @Getter
     private final List<ItemCart> itemCarts;
     private final Map<Integer, ItemCart> itemCartMap;
 

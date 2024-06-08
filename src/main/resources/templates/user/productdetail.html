@@ -52,7 +52,7 @@
               </a>
             </div>
             <div class="col-lg-6">
-              <form action="carrito.html" method="POST">
+              <form th:action="@{/user/cart/add-product}" method="POST">
 			    <input type="hidden" th:value="${product.id}" name="idProduct">
 			    <input type="hidden" th:value="${product.name}" name="nameProduct">
                 <input type="hidden" th:value="${product.price}" name="price">
