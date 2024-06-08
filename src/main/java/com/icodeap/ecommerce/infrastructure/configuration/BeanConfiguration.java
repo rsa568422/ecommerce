@@ -9,6 +9,7 @@ import com.icodeap.ecommerce.application.service.CartService;
 import com.icodeap.ecommerce.application.service.OrderProductService;
 import com.icodeap.ecommerce.application.service.OrderService;
 import com.icodeap.ecommerce.application.service.ProductService;
+import com.icodeap.ecommerce.application.service.RegistrationService;
 import com.icodeap.ecommerce.application.service.StockService;
 import com.icodeap.ecommerce.application.service.UploadFile;
 import com.icodeap.ecommerce.application.service.UserService;
@@ -55,6 +56,11 @@ public class BeanConfiguration {
     @Bean
     public UserService userService(UserRepository userRepository) {
         return new UserService(userRepository);
+    }
+
+    @Bean
+    public RegistrationService registrationService(UserService userService) {
+        return new RegistrationService(userService);
     }
 
     @Bean
