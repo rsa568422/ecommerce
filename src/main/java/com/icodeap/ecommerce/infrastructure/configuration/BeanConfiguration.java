@@ -1,16 +1,7 @@
 package com.icodeap.ecommerce.infrastructure.configuration;
 
-import com.icodeap.ecommerce.application.repository.OrderProductRepository;
-import com.icodeap.ecommerce.application.repository.OrderRepository;
-import com.icodeap.ecommerce.application.repository.ProductRepository;
-import com.icodeap.ecommerce.application.repository.StockRepository;
-import com.icodeap.ecommerce.application.service.CartService;
-import com.icodeap.ecommerce.application.service.OrderProductService;
-import com.icodeap.ecommerce.application.service.OrderService;
-import com.icodeap.ecommerce.application.service.ProductService;
-import com.icodeap.ecommerce.application.service.StockService;
-import com.icodeap.ecommerce.application.service.UploadFile;
-import com.icodeap.ecommerce.application.service.ValidateStock;
+import com.icodeap.ecommerce.application.repository.*;
+import com.icodeap.ecommerce.application.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -48,6 +39,11 @@ public class BeanConfiguration {
     @Bean
     public OrderProductService orderProductService(OrderProductRepository orderProductRepository) {
         return new OrderProductService(orderProductRepository);
+    }
+
+    @Bean
+    public UserService userService(UserRepository userRepository) {
+        return new UserService(userRepository);
     }
 
     @Bean
