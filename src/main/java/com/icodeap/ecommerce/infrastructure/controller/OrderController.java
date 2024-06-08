@@ -74,12 +74,13 @@ public class OrderController {
                     final var stock = new Stock();
                     stock.setProduct(orderProduct.getProduct());
                     stock.setDescription("venta");
+                    stock.setUnitIn(0);
                     stock.setUnitOut(orderProduct.getQuantity());
                     stock.setDateCreated(LocalDateTime.now());
                     stockService.saveStock(validateStock.calculateBalance(stock));
                 });
         cartService.removeAllItemsCart();
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     private OrderProduct toOrderProduct(ItemCart itemCart, Order order) {
