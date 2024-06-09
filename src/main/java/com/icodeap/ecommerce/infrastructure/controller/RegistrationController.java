@@ -1,15 +1,16 @@
 package com.icodeap.ecommerce.infrastructure.controller;
 
 import com.icodeap.ecommerce.application.service.RegistrationService;
-import com.icodeap.ecommerce.domain.User;
-import com.icodeap.ecommerce.domain.UserType;
+import com.icodeap.ecommerce.infrastructure.dto.UserDTO;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
-
+@Slf4j
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
@@ -26,11 +27,11 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String registerUser(User user) {
-        user.setUserType(UserType.USER);
-        user.setUsername(user.getEmail());
-        user.setDateCreated(LocalDateTime.now());
-        registrationService.register(user);
+    public String registerUser(@Valid UserDTO user, BindingResult bindResult) {
+        if (bindResult.hasErrors()) {
+            bindResult.getAllErrors().forEach(objectError -> log.info("ERROR: {}", objectError.getDefaultMessage()));
+        }
+        registrationService.register(user.userDtoToUser());
         return "redirect:/register";
     }
 }
