@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -22,16 +23,19 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public String register() {
+    public String register(UserDTO userDTO) {
         return "register";
     }
 
     @PostMapping
-    public String registerUser(@Valid UserDTO user, BindingResult bindResult) {
-        if (bindResult.hasErrors()) {
-            bindResult.getAllErrors().forEach(objectError -> log.info("ERROR: {}", objectError.getDefaultMessage()));
+    public String registerUser(@Valid UserDTO userDTO, BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(objectError -> log.info("ERROR: {}", objectError.getDefaultMessage()));
+            return "register";
         }
-        registrationService.register(user.userDtoToUser());
+        registrationService.register(userDTO.userDtoToUser());
+        redirectAttributes.addFlashAttribute("success", "Usuario registrado correctamente");
         return "redirect:/register";
     }
 }

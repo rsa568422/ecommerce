@@ -32,6 +32,7 @@ public class UserDTO {
     private String password;
 
     public User userDtoToUser() {
-        return new User(null, email, firstName, lastName, email, address, cellphone, password, UserType.USER, LocalDateTime.now());
+        return new User(null, getEmail(), getFirstName(), getLastName(), getEmail(), getAddress(),
+                getCellphone(), getPassword(), UserType.USER, LocalDateTime.now());
     }
 }
