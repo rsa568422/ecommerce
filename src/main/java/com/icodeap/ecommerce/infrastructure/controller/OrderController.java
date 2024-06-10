@@ -11,6 +11,7 @@ import com.icodeap.ecommerce.domain.ItemCart;
 import com.icodeap.ecommerce.domain.Order;
 import com.icodeap.ecommerce.domain.OrderProduct;
 import com.icodeap.ecommerce.domain.Stock;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,8 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping("/user/order")
 public class OrderController {
+
+    private static final Integer UNIT_IN = 0;
 
     private final CartService cartService;
 
@@ -52,6 +55,9 @@ public class OrderController {
 
     @GetMapping("/summary-order")
     public String showSummaryOrder(Model model) {
+        HttpSession httpSession = null;
+        log.info("id user desde la variable de sesión: {}", httpSession.getAttribute("iduser"));
+        var user = userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString()));
         model.addAttribute("user", userService.findById(1));
         model.addAttribute("cart", cartService.getItemCarts());
         model.addAttribute("total", cartService.getTotalCart());
@@ -61,7 +67,8 @@ public class OrderController {
     @GetMapping("/create-order")
     public String createOrder(Model model) {
         log.info("create order...");
-        final var user = userService.findById(1);
+        HttpSession httpSession = null;
+        final var user = userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString()));
         final var order = new Order();
         order.setUser(user);
         order.setDateCreated(LocalDateTime.now());
@@ -74,7 +81,7 @@ public class OrderController {
                     final var stock = new Stock();
                     stock.setProduct(orderProduct.getProduct());
                     stock.setDescription("venta");
-                    stock.setUnitIn(0);
+                    stock.setUnitIn(UNIT_IN);
                     stock.setUnitOut(orderProduct.getQuantity());
                     stock.setDateCreated(LocalDateTime.now());
                     stockService.saveStock(validateStock.calculateBalance(stock));
