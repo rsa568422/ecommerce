@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 
@@ -65,7 +66,7 @@ public class OrderController {
     }
 
     @GetMapping("/create-order")
-    public String createOrder(Model model, HttpSession httpSession) {
+    public String createOrder(RedirectAttributes attributes, HttpSession httpSession) {
         log.info("create order...");
         final var user = userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString()));
         final var order = new Order();
@@ -86,7 +87,7 @@ public class OrderController {
                     stockService.saveStock(validateStock.calculateBalance(stock));
                 });
         cartService.removeAllItemsCart();
-        model.addAttribute("id", httpSession.getAttribute("iduser"));
+        attributes.addFlashAttribute("id", httpSession.getAttribute("iduser"));
         return "redirect:/home";
     }
 
