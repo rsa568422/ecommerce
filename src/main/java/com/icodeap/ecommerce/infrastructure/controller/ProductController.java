@@ -3,6 +3,7 @@ package com.icodeap.ecommerce.infrastructure.controller;
 import com.icodeap.ecommerce.application.service.ProductService;
 import com.icodeap.ecommerce.domain.Product;
 import com.icodeap.ecommerce.domain.User;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,16 +33,18 @@ public class ProductController {
     }
 
     @PostMapping("/save-product")
-    public String saveProduct(Product product, @RequestParam("img") MultipartFile multipartFile) throws IOException {
+    public String saveProduct(Product product, @RequestParam("img") MultipartFile multipartFile,
+                              HttpSession httpSession) throws IOException {
         log.info("[SAVE] Producto: {}", product);
-        productService.saveProduct(product, multipartFile);
+        productService.saveProduct(product, multipartFile, httpSession);
         return "redirect:/admin";
     }
 
     @GetMapping("/show")
-    public String showProduct(Model model) {
+    public String showProduct(Model model, HttpSession httpSession) {
+        log.info("id user desde la variable de sesión: {}", httpSession.getAttribute("iduser"));
         var user = new User();
-        user.setId(1);
+        user.setId(Integer.parseInt(httpSession.getAttribute("iduser").toString()));
         var products = productService.getProductsByUser(user);
         model.addAttribute("products", products);
         return "admin/products/show";

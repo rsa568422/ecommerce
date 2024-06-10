@@ -5,18 +5,12 @@ import com.icodeap.ecommerce.application.repository.OrderRepository;
 import com.icodeap.ecommerce.application.repository.ProductRepository;
 import com.icodeap.ecommerce.application.repository.StockRepository;
 import com.icodeap.ecommerce.application.repository.UserRepository;
-import com.icodeap.ecommerce.application.service.CartService;
-import com.icodeap.ecommerce.application.service.OrderProductService;
-import com.icodeap.ecommerce.application.service.OrderService;
-import com.icodeap.ecommerce.application.service.ProductService;
-import com.icodeap.ecommerce.application.service.StockService;
-import com.icodeap.ecommerce.application.service.UploadFile;
-import com.icodeap.ecommerce.application.service.UserService;
-import com.icodeap.ecommerce.application.service.ValidateStock;
+import com.icodeap.ecommerce.application.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
@@ -55,6 +49,21 @@ public class BeanConfiguration {
     @Bean
     public UserService userService(UserRepository userRepository) {
         return new UserService(userRepository);
+    }
+
+    @Bean
+    public RegistrationService registrationService(UserService userService, PasswordEncoder passwordEncoder) {
+        return new RegistrationService(userService, passwordEncoder);
+    }
+
+    @Bean
+    public LoginService loginService(UserService userService) {
+        return new LoginService(userService);
+    }
+
+    @Bean
+    public LogoutService logoutService() {
+        return new LogoutService();
     }
 
     @Bean

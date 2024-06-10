@@ -11,11 +11,13 @@ import com.icodeap.ecommerce.domain.ItemCart;
 import com.icodeap.ecommerce.domain.Order;
 import com.icodeap.ecommerce.domain.OrderProduct;
 import com.icodeap.ecommerce.domain.Stock;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +25,8 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping("/user/order")
 public class OrderController {
+
+    private static final Integer UNIT_IN = 0;
 
     private final CartService cartService;
 
@@ -51,17 +55,20 @@ public class OrderController {
     }
 
     @GetMapping("/summary-order")
-    public String showSummaryOrder(Model model) {
-        model.addAttribute("user", userService.findById(1));
+    public String showSummaryOrder(Model model, HttpSession httpSession) {
+        log.info("id user desde la variable de sesión: {}", httpSession.getAttribute("iduser"));
+        model.addAttribute("user",
+                userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString())));
         model.addAttribute("cart", cartService.getItemCarts());
         model.addAttribute("total", cartService.getTotalCart());
+        model.addAttribute("id", httpSession.getAttribute("iduser"));
         return "user/sumaryorder";
     }
 
     @GetMapping("/create-order")
-    public String createOrder(Model model) {
+    public String createOrder(RedirectAttributes attributes, HttpSession httpSession) {
         log.info("create order...");
-        final var user = userService.findById(1);
+        final var user = userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString()));
         final var order = new Order();
         order.setUser(user);
         order.setDateCreated(LocalDateTime.now());
@@ -74,12 +81,13 @@ public class OrderController {
                     final var stock = new Stock();
                     stock.setProduct(orderProduct.getProduct());
                     stock.setDescription("venta");
-                    stock.setUnitIn(0);
+                    stock.setUnitIn(UNIT_IN);
                     stock.setUnitOut(orderProduct.getQuantity());
                     stock.setDateCreated(LocalDateTime.now());
                     stockService.saveStock(validateStock.calculateBalance(stock));
                 });
         cartService.removeAllItemsCart();
+        attributes.addFlashAttribute("id", httpSession.getAttribute("iduser"));
         return "redirect:/home";
     }
 
