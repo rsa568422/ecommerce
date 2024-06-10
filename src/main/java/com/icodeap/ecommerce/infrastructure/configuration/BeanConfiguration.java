@@ -5,15 +5,7 @@ import com.icodeap.ecommerce.application.repository.OrderRepository;
 import com.icodeap.ecommerce.application.repository.ProductRepository;
 import com.icodeap.ecommerce.application.repository.StockRepository;
 import com.icodeap.ecommerce.application.repository.UserRepository;
-import com.icodeap.ecommerce.application.service.CartService;
-import com.icodeap.ecommerce.application.service.OrderProductService;
-import com.icodeap.ecommerce.application.service.OrderService;
-import com.icodeap.ecommerce.application.service.ProductService;
-import com.icodeap.ecommerce.application.service.RegistrationService;
-import com.icodeap.ecommerce.application.service.StockService;
-import com.icodeap.ecommerce.application.service.UploadFile;
-import com.icodeap.ecommerce.application.service.UserService;
-import com.icodeap.ecommerce.application.service.ValidateStock;
+import com.icodeap.ecommerce.application.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -61,6 +53,11 @@ public class BeanConfiguration {
     @Bean
     public RegistrationService registrationService(UserService userService) {
         return new RegistrationService(userService);
+    }
+
+    @Bean
+    public LoginService loginService(UserService userService) {
+        return new LoginService(userService);
     }
 
     @Bean
