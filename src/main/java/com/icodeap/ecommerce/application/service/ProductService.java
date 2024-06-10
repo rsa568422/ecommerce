@@ -32,8 +32,7 @@ public class ProductService {
         return productRepository.getProductById(id);
     }
 
-    public Product saveProduct(Product product, MultipartFile multipartFile) throws IOException {
-        HttpSession httpSession = null;
+    public Product saveProduct(Product product, MultipartFile multipartFile, HttpSession httpSession) throws IOException {
         if (Objects.isNull(product.getId())) {
             var user = new User();
             user.setId(Integer.parseInt(httpSession.getAttribute("iduser").toString()));

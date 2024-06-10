@@ -54,8 +54,7 @@ public class OrderController {
     }
 
     @GetMapping("/summary-order")
-    public String showSummaryOrder(Model model) {
-        HttpSession httpSession = null;
+    public String showSummaryOrder(Model model, HttpSession httpSession) {
         log.info("id user desde la variable de sesión: {}", httpSession.getAttribute("iduser"));
         var user = userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString()));
         model.addAttribute("user", userService.findById(1));
@@ -65,9 +64,8 @@ public class OrderController {
     }
 
     @GetMapping("/create-order")
-    public String createOrder(Model model) {
+    public String createOrder(HttpSession httpSession) {
         log.info("create order...");
-        HttpSession httpSession = null;
         final var user = userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString()));
         final var order = new Order();
         order.setUser(user);
