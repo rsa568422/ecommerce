@@ -56,15 +56,16 @@ public class OrderController {
     @GetMapping("/summary-order")
     public String showSummaryOrder(Model model, HttpSession httpSession) {
         log.info("id user desde la variable de sesión: {}", httpSession.getAttribute("iduser"));
-        var user = userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString()));
-        model.addAttribute("user", userService.findById(1));
+        model.addAttribute("user",
+                userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString())));
         model.addAttribute("cart", cartService.getItemCarts());
         model.addAttribute("total", cartService.getTotalCart());
+        model.addAttribute("id", httpSession.getAttribute("iduser"));
         return "user/sumaryorder";
     }
 
     @GetMapping("/create-order")
-    public String createOrder(HttpSession httpSession) {
+    public String createOrder(Model model, HttpSession httpSession) {
         log.info("create order...");
         final var user = userService.findById(Integer.parseInt(httpSession.getAttribute("iduser").toString()));
         final var order = new Order();
@@ -85,6 +86,7 @@ public class OrderController {
                     stockService.saveStock(validateStock.calculateBalance(stock));
                 });
         cartService.removeAllItemsCart();
+        model.addAttribute("id", httpSession.getAttribute("iduser"));
         return "redirect:/home";
     }
 
