@@ -62,6 +62,11 @@ public class BeanConfiguration {
     }
 
     @Bean
+    public LogoutService logoutService() {
+        return new LogoutService();
+    }
+
+    @Bean
     @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public CartService cartService() {
         return new CartService();

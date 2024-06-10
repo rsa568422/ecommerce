@@ -33,7 +33,8 @@ public class SecurityConfiguration {
                 .requestMatchers("/user/**").hasRole("USER")
                 .anyRequest().permitAll()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/login/access");
+                .formLogin().loginPage("/login").defaultSuccessUrl("/login/access")
+                .and().logout().logoutSuccessUrl("/close");
         return httpSecurity.build();
     }
 
