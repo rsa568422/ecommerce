@@ -1,5 +1,6 @@
 package com.icodeap.ecommerce.infrastructure.configuration;
 
+import com.icodeap.ecommerce.infrastructure.service.LoginHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,8 +15,11 @@ public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
 
-    public SecurityConfiguration(UserDetailsService userDetailsService) {
+    private final LoginHandler loginHandler;
+
+    public SecurityConfiguration(UserDetailsService userDetailsService, LoginHandler loginHandler) {
         this.userDetailsService = userDetailsService;
+        this.loginHandler = loginHandler;
     }
 
     @Bean
@@ -33,7 +37,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/user/**").hasRole("USER")
                 .anyRequest().permitAll()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/login/access")
+                .formLogin().loginPage("/login").successHandler(loginHandler)
                 .and().logout().logoutSuccessUrl("/close");
         return httpSecurity.build();
     }
