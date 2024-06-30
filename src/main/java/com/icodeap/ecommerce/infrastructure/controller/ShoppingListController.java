@@ -34,6 +34,7 @@ public class ShoppingListController {
         var orders = orderService.getOrdersByUser(user);
         orders.forEach(this::getOrderProducts);
         model.addAttribute("orders", orders);
+        model.addAttribute("id", user.getId());
         return "user/shoppinglist";
     }
 
